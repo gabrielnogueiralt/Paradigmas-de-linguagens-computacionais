@@ -54,3 +54,16 @@ unicos [] = []
 unicos (x:xs)
   | ehIgual xs x  = unicos (removeElementos x xs)
   | otherwise = x : unicos xs
+
+-- Remova e divida
+aux :: Int -> [a] -> ([a], [a])
+aux 0 xs     = ([], xs)
+aux _ []     = ([], [])
+aux n (x:xs) = (x:xs', xs'')
+  where
+    (xs', xs'') = aux (n - 1) xs
+
+removeDiv :: Int -> [a] -> ([a], [a])
+removeDiv 0 xs     = ([], xs)
+removeDiv _ []     = ([], [])
+removeDiv n (x:xs) = (take (n-1) (x:xs), drop (n-1) xs)
