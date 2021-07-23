@@ -20,3 +20,11 @@ msort = listaCompleta . map (:[])
 
     subLista (x:y:xs) = merge x y:subLista xs
     subLista xs = xs
+
+-- Divida as listas
+metade :: [a] -> ([a], [a])
+metade [] = ([], [])
+metade [x] = ([x], [])
+metade (f:g:hs) =
+  let (fs, gs) = metade hs 
+    in (f : fs, g : gs)
