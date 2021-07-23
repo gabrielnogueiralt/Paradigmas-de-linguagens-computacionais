@@ -36,4 +36,21 @@ numDiv n m = divExata n m 0
     divExata n m c
       | n `mod` m == 0 = divExata (n `div` m)  m (c+1)
       | otherwise = c
-      
+
+-- Quais os únicos
+removeElementos :: Int -> [Int] -> [Int]
+removeElementos _ []                 = []
+removeElementos x (y:ys) | x == y    = removeElementos x ys
+                         | otherwise = y : removeElementos x ys
+
+ehIgual :: (Eq a) => [a] -> a -> Bool
+ehIgual [] _ = False
+ehIgual (x:xs) y
+  | x == y    = True
+  | otherwise = ehIgual xs y
+
+unicos :: [Int] -> [Int]
+unicos [] = []
+unicos (x:xs)
+  | ehIgual xs x  = unicos (removeElementos x xs)
+  | otherwise = x : unicos xs
