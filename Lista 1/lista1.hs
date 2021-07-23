@@ -28,3 +28,12 @@ metade [x] = ([x], [])
 metade (f:g:hs) =
   let (fs, gs) = metade hs 
     in (f : fs, g : gs)
+
+-- Quantas divisões exatas
+numDiv :: Integral a => a -> a -> a
+numDiv n m = divExata n m 0
+  where
+    divExata n m c
+      | n `mod` m == 0 = divExata (n `div` m)  m (c+1)
+      | otherwise = c
+      
