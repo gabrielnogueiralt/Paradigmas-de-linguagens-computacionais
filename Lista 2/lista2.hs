@@ -46,3 +46,16 @@ perfeitos n = teste [1..n]
 -- Unzip com foldr
 unzip' :: [(a,b)] -> ([a],[b])
 unzip' = foldr (\x acumulador -> (fst x:fst acumulador, snd x:snd acumulador)) ([],[])
+
+-- Posts & Threads (a)
+
+type Texto = String
+type Id = String
+type DataHoraPub = Int
+
+data Post = Post (Id , DataHoraPub ) Texto deriving (Show , Eq, Read)
+data Thread = Nil | T Post ( Thread ) deriving (Read)
+
+instance Show Thread where
+    show Nil = ""
+    show (T (Post (i, d) t) (xs)) = "(" ++ i ++ " " ++ show d ++ " " ++ t ++ ")" ++ show xs 
