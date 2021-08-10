@@ -64,3 +64,9 @@ instance Show Thread where
 inserirPost :: Post -> Thread -> Thread
 inserirPost ((Post (newi, newd) newt)) (Nil) = (T (Post (newi, newd) newt) Nil)
 inserirPost ((Post (newi, newd) newt)) (T (Post (i, d) t) (xs)) = (T (Post (newi, newd) newt) ((T (Post (i, d) t) (xs))))
+
+-- Posts & Threads (c)
+threadToList :: Thread -> [Post]
+threadToList (Nil) = []
+threadToList (T (Post (i, d) t) Nil) = [(Post (i, d) t)]
+threadToList (T (Post (i, d) t) (xs)) = [(Post (i, d) t)] ++ threadToList xs
