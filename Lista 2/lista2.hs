@@ -42,3 +42,7 @@ perfeitos n = teste [1..n]
     where
         teste [x]    = verificaIgualdade (somaQuadrados (fatores x (primes x))) x ++ [1]
         teste (x:xs) = conc xs ++ (verificaIgualdade (somaQuadrados (fatores x (primes x))) x) ++ [1]
+
+-- Unzip com foldr
+unzip' :: [(a,b)] -> ([a],[b])
+unzip' = foldr (\x acumulador -> (fst x:fst acumulador, snd x:snd acumulador)) ([],[])
