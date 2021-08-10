@@ -76,3 +76,24 @@ listToThread :: [Post] -> Thread
 listToThread [] = (Nil)
 listToThread [(Post (i, d) t)] = (T (Post (i, d) t) Nil)
 listToThread ((Post (i, d) t):xs) = (T (Post (i, d) t) (listToThread xs))
+
+-- Posts & Threads (e)
+listToTuple :: [Post] -> ([Char], Int)
+listToTuple [] = ("", 0)
+listToTuple [(Post (i, d) t)] = (i, d)
+
+tuplaEhIgual :: [Post] -> (Id, DataHoraPub) -> ([Char], Int) -> [Post]
+tuplaEhIgual [x] (ri, dhp) (i, d)
+    |(ri, dhp) /= (i, d) = [x]
+    |otherwise = []
+
+compara :: (Id, DataHoraPub) -> [Post] -> [Post]
+compara (ri, dhp) []     = []
+compara (ri, dhp) [x]    = tuplaEhIgual [x] (ri, dhp) (listToTuple [x])
+compara (ri, dhp) (x:xs) = tuplaEhIgual [x] (ri, dhp) (listToTuple [x]) ++ compara (ri, dhp) xs
+
+removerPost' :: (Id, DataHoraPub) -> Thread -> Thread
+removerPost' (ri, dhp) (T (Post (i, d) t) xs) = listToThread (compara (ri, dhp) (threadToList (T (Post (i, d) t) xs)))
+
+removerPost :: (Id, DataHoraPub) -> Thread -> Thread
+removerPost (ri, dhp) (thr) = listToThread (filter (\(Post (i, d) t) -> if ((ri /= i) || (dhp /= d)) then True else False) (threadToList (thr)))
