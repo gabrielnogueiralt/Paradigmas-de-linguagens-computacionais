@@ -59,3 +59,8 @@ data Thread = Nil | T Post ( Thread ) deriving (Read)
 instance Show Thread where
     show Nil = ""
     show (T (Post (i, d) t) (xs)) = "(" ++ i ++ " " ++ show d ++ " " ++ t ++ ")" ++ show xs 
+
+-- Posts & Threads (b)   
+inserirPost :: Post -> Thread -> Thread
+inserirPost ((Post (newi, newd) newt)) (Nil) = (T (Post (newi, newd) newt) Nil)
+inserirPost ((Post (newi, newd) newt)) (T (Post (i, d) t) (xs)) = (T (Post (newi, newd) newt) ((T (Post (i, d) t) (xs))))
