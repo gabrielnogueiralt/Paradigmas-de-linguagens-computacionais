@@ -70,3 +70,9 @@ threadToList :: Thread -> [Post]
 threadToList (Nil) = []
 threadToList (T (Post (i, d) t) Nil) = [(Post (i, d) t)]
 threadToList (T (Post (i, d) t) (xs)) = [(Post (i, d) t)] ++ threadToList xs
+
+-- Posts & Threads (d)
+listToThread :: [Post] -> Thread
+listToThread [] = (Nil)
+listToThread [(Post (i, d) t)] = (T (Post (i, d) t) Nil)
+listToThread ((Post (i, d) t):xs) = (T (Post (i, d) t) (listToThread xs))
